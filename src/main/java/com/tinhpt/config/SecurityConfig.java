@@ -28,18 +28,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/").permitAll()
                     .antMatchers("/admin").hasRole("ADMIN")
                     .and()
-                /*.formLogin()
+                .formLogin()
                     .loginProcessingUrl("/login")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()
                     .and()
-                .httpBasic()
+                .logout()
+                    .logoutUrl("/logout")
+                    .deleteCookies("JSESSIONID")
                     .and()
-                .logout().logoutUrl("/logout")
-                    .and()*/
-                .httpBasic()
-                .and()
+                /*.httpBasic()
+                .and()*/
                 .csrf().disable()
                 .cors();
     }
