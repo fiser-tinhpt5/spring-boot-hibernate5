@@ -3,7 +3,7 @@ package com.tinhpt.entity;
 import javax.persistence.*;
 
 /**
- * Created by septechuser on 23/12/2016.
+ * Created by septechuser on 26/12/2016.
  */
 @Entity
 @Table(name = "users", schema = "ddd_training_app")

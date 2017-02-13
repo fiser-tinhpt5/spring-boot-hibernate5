@@ -1,36 +1,53 @@
 package com.tinhpt.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * Created by septechuser on 23/12/2016.
+ * Created by septechuser on 26/12/2016.
  */
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "com.tinhpt.entity" })
 public class DBConfig {
 
-    @Autowired
-    private Environment env;
+    @Value("${db.driver}")
+    private String DB_DRIVER;
 
-    @Bean(name ="dataSource")
+    @Value("${db.password}")
+    private String DB_PASSWORD;
+
+    @Value("${db.url}")
+    private String DB_URL;
+
+    @Value("${db.username}")
+    private String DB_USERNAME;
+
+    @Value("${hibernate.dialect}")
+    private String HIBERNATE_DIALECT;
+
+    @Value("${hibernate.show_sql}")
+    private String HIBERNATE_SHOW_SQL;
+
+    @Value("${entitymanager.packagesToScan}")
+    private String ENTITYMANAGER_PACKAGES_TO_SCAN;
+
+    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("db.driver"));
-        dataSource.setUrl(env.getProperty("db.url"));
-        dataSource.setUsername(env.getProperty("db.username"));
-        dataSource.setPassword(env.getProperty("db.password"));
+        dataSource.setDriverClassName(DB_DRIVER);
+        dataSource.setUrl(DB_URL);
+        dataSource.setUsername(DB_USERNAME);
+        dataSource.setPassword(DB_PASSWORD);
         return dataSource;
     }
 
@@ -38,10 +55,10 @@ public class DBConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource());
-        sessionFactoryBean.setPackagesToScan(env.getProperty("entitymanager.packageToScan"));
+        sessionFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN);
         Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
-        hibernateProperties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        hibernateProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
+        hibernateProperties.put("hibernate.show_sql", HIBERNATE_SHOW_SQL);
         sessionFactoryBean.setHibernateProperties(hibernateProperties);
         return sessionFactoryBean;
     }
@@ -52,4 +69,5 @@ public class DBConfig {
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
     }
+
 }

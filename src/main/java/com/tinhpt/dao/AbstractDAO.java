@@ -1,18 +1,17 @@
 package com.tinhpt.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
- * Created by septechuser on 23/12/2016.
+ * Created by septechuser on 26/12/2016.
  */
 @Transactional
 public class AbstractDAO<T, PK extends Serializable> {
@@ -52,15 +51,11 @@ public class AbstractDAO<T, PK extends Serializable> {
         getSession().delete(entity);
     }
 
-    protected CriteriaBuilder getCriteriaBuilder() {
-        return getSession().getCriteriaBuilder();
-    }
-
-    protected CriteriaQuery<T> createCriteriaQuery() {
-        return getCriteriaBuilder().createQuery(persistentClass);
+    protected Criteria createEntityCriteria(){
+        return getSession().createCriteria(persistentClass);
     }
 
     public List<T> findAll() {
-        return getSession().createQuery(createCriteriaQuery()).getResultList();
+        return createEntityCriteria().list();
     }
 }

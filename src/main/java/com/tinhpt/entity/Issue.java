@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by septechuser on 23/12/2016.
+ * Created by septechuser on 26/12/2016.
  */
 @Entity
 @Table(name = "issues", schema = "ddd_training_app")
@@ -19,7 +19,7 @@ public class Issue {
     private String urgency;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -29,7 +29,7 @@ public class Issue {
     }
 
     @Basic
-    @Column(name = "content", nullable = false, length = 1000)
+    @Column(name = "content")
     public String getContent() {
         return content;
     }
@@ -39,7 +39,7 @@ public class Issue {
     }
 
     @Basic
-    @Column(name = "action", nullable = false, length = 1000)
+    @Column(name = "action")
     public String getAction() {
         return action;
     }
@@ -49,7 +49,7 @@ public class Issue {
     }
 
     @Basic
-    @Column(name = "status", nullable = false, length = 10)
+    @Column(name = "status")
     public String getStatus() {
         return status;
     }
@@ -59,7 +59,7 @@ public class Issue {
     }
 
     @Basic
-    @Column(name = "deadline", nullable = false)
+    @Column(name = "deadline")
     public Date getDeadline() {
         return deadline;
     }
@@ -69,7 +69,7 @@ public class Issue {
     }
 
     @Basic
-    @Column(name = "assignee", nullable = false)
+    @Column(name = "assignee")
     public int getAssignee() {
         return assignee;
     }
@@ -79,7 +79,7 @@ public class Issue {
     }
 
     @Basic
-    @Column(name = "importance", nullable = false, length = 4)
+    @Column(name = "importance")
     public String getImportance() {
         return importance;
     }
@@ -89,7 +89,7 @@ public class Issue {
     }
 
     @Basic
-    @Column(name = "urgency", nullable = false, length = 4)
+    @Column(name = "urgency")
     public String getUrgency() {
         return urgency;
     }
